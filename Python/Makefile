@@ -4,11 +4,12 @@ RESET="\e[0m"
 
 CC = python3
 COLLEEN = Colleen.py
+GRACE = Grace.py
 # SULLY = Sully.py
-# GRACE = Grace.py
 
 
-all: colleen #grace sully
+
+all: Colleen Grace #sully
 
 test:
 			@echo "--- TESTING ---\n"
@@ -19,13 +20,13 @@ test:
     		else \
         		echo $(RED)"[KO]"$(RESET); \
     		fi
-# @echo "GRACE"
-# @$(CC) $(GRACE)
-# @if (diff Grace.py Grace_kid.py); then \
-# 	echo $(GREEN)"[OK]"$(RESET); \
-# else \
-# 	echo $(RED)"[KO]"$(RESET); \
-# fi
+			@echo "GRACE"
+			@$(CC) $(GRACE)
+			@if (diff Grace.py Grace_kid.py); then \
+				echo $(GREEN)"[OK]"$(RESET); \
+			else \
+				echo $(RED)"[KO]"$(RESET); \
+			fi
 # @echo "SULLY"
 # @$(CC) $(SULLY)
 # @if test -f "Sully_0.py" && test -f "Sully_1.py" && test -f "Sully_2.py" && test -f "Sully_3.py" && test -f "Sully_4.py"; then \
@@ -34,11 +35,11 @@ test:
 # 	echo $(RED)"[KO]"$(RESET); \
 # fi
 
-colleen:
+Colleen:
 			@$(CC) $(COLLEEN)
 
-# grace:
-# 			@$(CC) $(GRACE)
+Grace:
+			@$(CC) $(GRACE)
 
 # sully:
 # 			@$(CC) $(SULLY)
@@ -46,6 +47,7 @@ colleen:
 clean:
 			@echo "Cleaning generated files"
 			@rm -f Sully_* Grace_kid.py colleen.log
+
 re		:	clean all
 
 .PHONY:		all test colleen grace sully clean re
