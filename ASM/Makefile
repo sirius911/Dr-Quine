@@ -16,7 +16,7 @@ G_OBJS = $(GRACE:.s=.o)
 %.o: %.s
 	@nasm -f elf64 -o $*.o $*.s
 
-all: colleen grace #sully
+all: Colleen Grace #sully
 
 test:	Colleen Grace
 		@echo "--- TESTING ---\n"
@@ -35,19 +35,21 @@ test:	Colleen Grace
 			echo $(RED)"[KO]"$(RESET); \
 		fi
 
-colleen: $(C_OBJS)
+Colleen: $(C_OBJS)
 		@$(CC) $(C_OBJS) -o Colleen
 		@echo "Compil Colleen -> "$(GREEN)"[OK]"$(RESET); \
 
-grace: $(G_OBJS)
-		@$(CC) $(G_OBJS) -o grace
+Grace: $(G_OBJS)
+		@$(CC) $(G_OBJS) -o Grace
+		@echo "Compil Grace -> "$(GREEN)"[OK]"$(RESET); \
 
-# sully: $(S_OBJS)
-# 		@$(CC) $(S_OBJS) -o sully
+# Sully: $(S_OBJS)
+# 		@$(CC) $(S_OBJS) -o Sully
+# @echo "Compil Sully -> "$(GREEN)"[OK]"$(RESET); \
 
 clean:
 			@echo "Cleaning all generated files"
-			@rm -f Sully_* Grace_kid.s Colleen.log *.o Colleen colleen
+			@rm -f Sully_* Grace_kid.s Colleen.log *.o Colleen Grace
 
 re		:	clean all
 
