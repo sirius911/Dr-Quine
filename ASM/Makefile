@@ -2,24 +2,34 @@ RED="\e[91m"
 GREEN="\e[92m"
 RESET="\e[0m"
 
-CC = gcc -Wall -Wextra -Werror -no-pie
+CC = gcc -Wall -Wextra -Werror -no-pie -g
 
 COLLEEN = Colleen.s
+GRACE = Grace.s
 # SULLY = Sully.s
-# GRACE = Grace.s
+
 
 C_OBJS = $(COLLEEN:.s=.o)
-# G_OBJS = $(GRACE:.s=.o)
+G_OBJS = $(GRACE:.s=.o)
 # S_OBJS = $(SULLY:.s=.o)
 
 %.o: %.s
 	@nasm -f elf64 -o $*.o $*.s
 
-all: colleen #grace sully
+all: colleen grace #sully
 
-test:	Colleen
+test:	Colleen Grace
+		@echo "--- TESTING ---\n"
+		@echo "COLLEEN"
 		@./Colleen > Colleen.log
 		@if (diff Colleen.log Colleen.s); then \
+			echo $(GREEN)"[OK]"$(RESET); \
+		else \
+			echo $(RED)"[KO]"$(RESET); \
+		fi
+		@echo "GRACE"
+		@./Grace
+		@if (diff Grace.s Grace_kid.s); then \
 			echo $(GREEN)"[OK]"$(RESET); \
 		else \
 			echo $(RED)"[KO]"$(RESET); \
@@ -29,8 +39,8 @@ colleen: $(C_OBJS)
 		@$(CC) $(C_OBJS) -o Colleen
 		@echo "Compil Colleen -> "$(GREEN)"[OK]"$(RESET); \
 
-# grace: $(G_OBJS)
-# 		@$(CC) $(G_OBJS) -o grace
+grace: $(G_OBJS)
+		@$(CC) $(G_OBJS) -o grace
 
 # sully: $(S_OBJS)
 # 		@$(CC) $(S_OBJS) -o sully
