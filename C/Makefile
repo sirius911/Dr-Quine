@@ -55,10 +55,8 @@ sully: 		$(S_OBJS)
 			@./a.out
 
 clean:
-			@echo "Deleted all generated files"
-			@rm -f *.o
-			@rm -f a.out
-			@rm -f Sully_* Grace_kid.c colleen.log
+			@echo "Cleaning all generated files"
+			@rm -f *.o a.out Sully_* Grace_kid.c colleen.log
 
 re		:	clean all
 
