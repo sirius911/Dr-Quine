@@ -5,15 +5,16 @@ RESET="\e[0m"
 CC = gcc -Wextra -Werror -Wall
 
 COLLEEN = Colleen.c
+GRACE = Grace.c
 # SULLY = Sully.c
-# GRACE = Grace.c
+
 
 
 C_OBJS		= $(COLLEEN:.c=.o)
-# G_OBJS		= $(GRACE:.c=.o)
+G_OBJS		= $(GRACE:.c=.o)
 # S_OBJS		= $(SULLY:.c=.o)
 
-all: colleen #grace sully
+all: colleen grace #sully
 
 test:		$(C_OBJS) $(G_OBJS) $(S_OBJS)
 			@echo "--- TESTING ---\n"
@@ -25,14 +26,14 @@ test:		$(C_OBJS) $(G_OBJS) $(S_OBJS)
     		else \
         		echo $(RED)"[KO]"$(RESET); \
     		fi
-# @echo "GRACE"
-# @$(CC) $(G_OBJS)
-# @./a.out
-# @if (diff Grace.c Grace_kid.c); then \
-# 	echo $(GREEN)"[OK]"$(RESET); \
-# else \
-# 	echo $(RED)"[KO]"$(RESET); \
-# fi
+			@echo "GRACE"
+			@$(CC) $(G_OBJS)
+			@./a.out
+			@if (diff Grace.c Grace_kid.c); then \
+				echo $(GREEN)"[OK]"$(RESET); \
+			else \
+				echo $(RED)"[KO]"$(RESET); \
+			fi
 # @echo "SULLY"
 # @$(CC) $(S_OBJS)
 # @./a.out
