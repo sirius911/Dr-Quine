@@ -5,11 +5,11 @@ RESET="\e[0m"
 CC = python3
 COLLEEN = Colleen.py
 GRACE = Grace.py
-# SULLY = Sully.py
+SULLY = Sully.py
 
 
 
-all: Colleen Grace #sully
+all: Colleen Grace Sully
 
 test:
 			@echo "--- TESTING ---\n"
@@ -27,13 +27,13 @@ test:
 			else \
 				echo $(RED)"[KO]"$(RESET); \
 			fi
-# @echo "SULLY"
-# @$(CC) $(SULLY)
-# @if test -f "Sully_0.py" && test -f "Sully_1.py" && test -f "Sully_2.py" && test -f "Sully_3.py" && test -f "Sully_4.py"; then \
-# 	echo $(GREEN)"[OK]"$(RESET); \
-# else \
-# 	echo $(RED)"[KO]"$(RESET); \
-# fi
+			@echo "SULLY"
+			@$(CC) $(SULLY)
+			@if test -f "Sully_0.py" && test -f "Sully_1.py" && test -f "Sully_2.py" && test -f "Sully_3.py" && test -f "Sully_4.py"; then \
+				echo $(GREEN)"[OK]"$(RESET); \
+			else \
+				echo $(RED)"[KO]"$(RESET); \
+			fi
 
 Colleen:
 			@$(CC) $(COLLEEN)
@@ -41,8 +41,8 @@ Colleen:
 Grace:
 			@$(CC) $(GRACE)
 
-# sully:
-# 			@$(CC) $(SULLY)
+Sully:
+			@$(CC) $(SULLY)
 
 clean:
 			@echo "Cleaning generated files"
