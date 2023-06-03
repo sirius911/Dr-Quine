@@ -6,15 +6,15 @@ CC = gcc -Wextra -Werror -Wall
 
 COLLEEN = Colleen.c
 GRACE = Grace.c
-# SULLY = Sully.c
+SULLY = Sully.c
 
 
 
 C_OBJS		= $(COLLEEN:.c=.o)
 G_OBJS		= $(GRACE:.c=.o)
-# S_OBJS		= $(SULLY:.c=.o)
+S_OBJS		= $(SULLY:.c=.o)
 
-all: colleen grace #sully
+all: colleen grace Sully
 
 test:		$(C_OBJS) $(G_OBJS) $(S_OBJS)
 			@echo "--- TESTING ---\n"
@@ -34,24 +34,24 @@ test:		$(C_OBJS) $(G_OBJS) $(S_OBJS)
 			else \
 				echo $(RED)"[KO]"$(RESET); \
 			fi
-# @echo "SULLY"
-# @$(CC) $(S_OBJS)
-# @./a.out
-# @if test -f "Sully_0.c" && test -f "Sully_1.c" && test -f "Sully_2.c" && test -f "Sully_3.c" && test -f "Sully_4.c"; then \
-# 	echo $(GREEN)"[OK]"$(RESET); \
-# else \
-# 	echo $(RED)"[KO]"$(RESET); \
-# fi
+			@echo "SULLY"
+			@$(CC) $(S_OBJS)
+			@./a.out
+			@if test -f "Sully_0.c" && test -f "Sully_1.c" && test -f "Sully_2.c" && test -f "Sully_3.c" && test -f "Sully_4.c"; then \
+				echo $(GREEN)"[OK]"$(RESET); \
+			else \
+				echo $(RED)"[KO]"$(RESET); \
+			fi
 
-colleen: 	$(C_OBJS)
+Colleen: 	$(C_OBJS)
 			@$(CC) $(C_OBJS)
 			@./a.out
 
-grace: 		$(G_OBJS)
+Grace: 		$(G_OBJS)
 			@$(CC) $(G_OBJS)
 			@./a.out
 
-sully: 		$(S_OBJS)
+Sully: 		$(S_OBJS)
 			@$(CC) $(S_OBJS)
 			@./a.out
 
@@ -61,4 +61,4 @@ clean:
 
 re		:	clean all
 
-.PHONY:		all test colleen grace sully clean re
+.PHONY:		all test Colleen Grace Sully clean re
