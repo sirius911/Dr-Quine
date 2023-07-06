@@ -1,6 +1,8 @@
-RED="\e[91m"
-GREEN="\e[92m"
-RESET="\e[0m"
+RED="\033[1;31m"
+GREEN="\033[92m"
+RESET="\033[0m"
+
+SHELL := /bin/bash
 
 CC = gcc -Wall -Wextra -Werror -no-pie
 
@@ -18,59 +20,70 @@ S_OBJS = $(SULLY:.s=.o)
 
 all: Colleen Grace Sully
 
-test:	Colleen Grace Sully
-		@echo "--- TESTING ---\n"
-		@echo "COLLEEN"
-		@./Colleen > Colleen.log
-		@if (diff Colleen.log Colleen.s); then \
-			echo $(GREEN)"[OK]"$(RESET); \
-		else \
-			echo $(RED)"[KO]"$(RESET); \
-		fi
-		@echo "GRACE"
-		@./Grace
-		@if (diff Grace.s Grace_kid.s); then \
-			echo $(GREEN)"[OK]"$(RESET); \
-		else \
-			echo $(RED)"[KO]"$(RESET); \
-		fi
-		@echo "SULLY"
-		@./Sully
-		@for i in 4 3 2 1 0 ; do \
-			echo -n "Sully_"$$i".s... "; \
-			if [ ! -f "Sully_$${i}.s" ]; then \
-				echo $(RED)"[NOT FOUND]"$(RESET); \
-			else \
-				diff Sully.s "Sully_$$i".s | wc -l > nb_diff.txt; \
-				diff Sully.s "Sully_$$i".s | tail -n -1 | sed -n 's/.*mov r12, \([0-4]\).*/\1/p' > tmp.txt; \
-				result_diff=$$(cat tmp.txt); \
-				nb_diff=$$(cat nb_diff.txt); \
-				if [ "$$result_diff" -eq "$$i" -a "$$nb_diff" -eq 4 ]; then \
-					echo $(GREEN)"[OK]"$(RESET); \
+test_all:		test_colleen test_grace test_sully
+
+test_colleen:	Colleen
+				@echo "COLLEEN"
+				@./Colleen > colleen.log
+				@if (diff colleen.log Colleen.s); then \
+					echo -e $(GREEN)"[OK]"$(RESET); \
 				else \
-					echo $(RED)"[KO]"$(RESET); \
-					diff Sully.s "Sully_$$i".s; \
-				fi; \
-			fi; \
-			rm -f tmp.txt nb_diff.txt; \
-		done
+					echo -e $(RED)"[KO]"$(RESET); \
+				fi
+				@rm -f Colleen colleen.log Colleen.o
+
+test_grace:		Grace
+				@echo "GRACE"
+				@./Grace
+				@if (diff Grace.s Grace_kid.s); then \
+					echo -e $(GREEN)"[OK]"$(RESET); \
+				else \
+					echo -e $(RED)"[KO]"$(RESET); \
+				fi
+				@rm -f Grace Grace.o Grace_kid.s
+
+test_sully:		Sully
+				@echo "SULLY"
+				@./Sully
+				@for i in 4 3 2 1 0 ; do \
+					echo -n "Sully_"$$i".s... "; \
+					if [ ! -f "Sully_$${i}.s" ]; then \
+						echo $(RED)"[NOT FOUND]"$(RESET); \
+					else \
+						diff Sully.s "Sully_$$i".s | wc -l > nb_diff.txt; \
+						diff Sully.s "Sully_$$i".s | tail -n -1 | sed -n 's/.*mov r12, \([0-4]\).*/\1/p' > tmp.txt; \
+						result_diff=$$(cat tmp.txt); \
+						nb_diff=$$(cat nb_diff.txt); \
+						if [ "$$result_diff" -eq "$$i" -a "$$nb_diff" -eq 4 ]; then \
+							echo -e $(GREEN)"[OK]"$(RESET); \
+						else \
+							echo -e $(RED)"[KO]"$(RESET); \
+							diff Sully.s "Sully_$$i".s; \
+						fi; \
+					fi; \
+					rm -f tmp.txt nb_diff.txt; \
+				done
+				@rm -f  Sully Sully_* Sully.o
 
 Colleen: $(C_OBJS)
 		@$(CC) $(C_OBJS) -o Colleen
-		@echo "Compil Colleen -> "$(GREEN)"[OK]"$(RESET); \
+		@echo -e "Compil Colleen -> "$(GREEN)"[OK]"$(RESET); \
 
 Grace: $(G_OBJS)
 		@$(CC) $(G_OBJS) -o Grace
-		@echo "Compil Grace -> "$(GREEN)"[OK]"$(RESET); \
+		@echo -e "Compil Grace -> "$(GREEN)"[OK]"$(RESET); \
 
 Sully: $(S_OBJS)
 		@$(CC) $(S_OBJS) -o Sully
-		@echo "Compil Sully -> "$(GREEN)"[OK]"$(RESET); \
+		@echo -e "Compil Sully -> "$(GREEN)"[OK]"$(RESET); \
 
 clean:
 			@echo "Cleaning all generated files"
-			@rm -f Sully_* Grace_kid.s Colleen.log *.o Colleen Grace Sully
+			@rm -f Sully_* Grace_kid.s colleen.log *.o *.tmp
+
+fclean:		clean
+			@rm -f Colleen Grace Sully
 
 re		:	clean all
 
-.PHONY:		all test colleen grace sully clean re
+.PHONY:		all Colleen Grace Sully clean fclean re test_all test_colleen test_grace test_sully

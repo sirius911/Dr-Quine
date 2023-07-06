@@ -84,4 +84,4 @@ fclean:		clean
 
 re		:	fclean all
 
-.PHONY:		all test Colleen Grace Sully clean fclean re test_all test_colleen test_grace test_sully
+.PHONY:		all Colleen Grace Sully clean fclean re test_all test_colleen test_grace test_sully
