@@ -74,7 +74,6 @@ Grace: 		$(G_OBJS)
 
 Sully: 		$(S_OBJS)
 			@$(CC) -o Sully $(S_OBJS)
-			
 
 clean:
 			@echo "Cleaning all generated files"
