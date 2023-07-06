@@ -34,6 +34,7 @@ test:
 			else \
 				echo $(RED)"[KO]"$(RESET); \
 			fi
+			@$(MAKE) -s clean;
 
 Colleen:
 			@$(CC) $(COLLEEN)
@@ -48,6 +49,8 @@ clean:
 			@echo "Cleaning generated files"
 			@rm -f Sully_* Grace_kid.py colleen.log
 
+fclean:		clean
+
 re		:	clean all
 
-.PHONY:		all test colleen grace sully clean re
+.PHONY:		all test Colleen Grace Sully clean fclean re
