@@ -45,16 +45,17 @@ test_grace:		Grace
 test_sully:		Sully
 				@echo "SULLY"
 				@./Sully
-				@for i in 4 3 2 1 0 ; do \
+				@for i in 5 4 3 2 1 0 ; do \
 					echo -n "Sully_"$$i".s... "; \
 					if [ ! -f "Sully_$${i}.s" ]; then \
 						echo $(RED)"[NOT FOUND]"$(RESET); \
 					else \
 						diff Sully.s "Sully_$$i".s | wc -l > nb_diff.txt; \
-						diff Sully.s "Sully_$$i".s | tail -n -1 | sed -n 's/.*mov r12, \([0-4]\).*/\1/p' > tmp.txt; \
+						diff Sully.s "Sully_$$i".s | tail -n -1 | sed -n -E 's/.*mov r12, (-?[0-5]).*/\1/p' > tmp.txt; \
 						result_diff=$$(cat tmp.txt); \
+						result=$$(expr $$result_diff + 1); \
 						nb_diff=$$(cat nb_diff.txt); \
-						if [ "$$result_diff" -eq "$$i" -a "$$nb_diff" -eq 4 ]; then \
+						if [ "$$result" -eq "$$i" -a "$$nb_diff" -eq 4 ]; then \
 							echo -e $(GREEN)"[OK]"$(RESET); \
 						else \
 							echo -e $(RED)"[KO]"$(RESET); \
