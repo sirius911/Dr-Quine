@@ -39,12 +39,12 @@ test_grace:		Grace
 				@rm -f Grace Grace.o Grace_kid.c
 
 diff_check:
-			@for i in $$(seq 0 4); do \
+			@for i in $$(seq 0 5); do \
 				echo -n "       Checking Sully.c vs Sully_$$i.c ... "; \
 				diff_output=$$(diff Sully.c Sully_$$i.c | grep -vE '^>|^---|^<'); \
 				line_count=$$(echo "$$diff_output" | wc -l); \
 				if [ "$$line_count" -eq 1 ]; then \
-					if [ "$$diff_output" = "5c5" ]; then \
+					if [ "$$diff_output" = "10c10" ]; then \
 						echo -e $(GREEN)"[OK]"$(RESET); \
 					else \
 						echo -e $(RED)"[KO]"$(RESET); \
