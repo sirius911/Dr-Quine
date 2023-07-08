@@ -1,13 +1,17 @@
 from subprocess import call
+"""
+    comment
+"""
 
 def main():
   i = 5
-  if i <= 0:
-    return
   j = i - 1
-  str = 'from subprocess import call\n\ndef main():\n  i = %d\n  if i <= 0:\n    return\n  j = i - 1\n  str = %r\n  with open("Sully_%%d.py" %% j, "w") as f:\n    f.write(str %% (j, str))\n  call(["python3", "Sully_%%d.py" %% j])\n\nmain()'
-  with open("Sully_%d.py" % j, "w") as f:
+  if j < -1:
+    return
+
+  str = 'from subprocess import call\n"""\n    comment\n"""\n\ndef main():\n  i = %d\n  j = i - 1\n  if j < -1:\n    return\n\n  str = %r\n  with open("Sully_%%d.py" %% i, "w") as f:\n    f.write(str %% (j, str))\n  call(["python3", "Sully_%%d.py" %% i])\n\nmain()'
+  with open("Sully_%d.py" % i, "w") as f:
     f.write(str % (j, str))
-  call(["python3", "Sully_%d.py" % j])
+  call(["python3", "Sully_%d.py" % i])
 
 main()

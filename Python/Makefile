@@ -29,7 +29,7 @@ test:
 			fi
 			@echo "SULLY"
 			@$(CC) $(SULLY)
-			@if test -f "Sully_0.py" && test -f "Sully_1.py" && test -f "Sully_2.py" && test -f "Sully_3.py" && test -f "Sully_4.py"; then \
+			@if test -f "Sully_0.py" && test -f "Sully_1.py" && test -f "Sully_2.py" && test -f "Sully_3.py" && test -f "Sully_4.py" && test -f "Sully_5.py"; then \
 				echo $(GREEN)"[OK]"$(RESET); \
 			else \
 				echo $(RED)"[KO]"$(RESET); \
