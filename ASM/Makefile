@@ -76,6 +76,7 @@ Grace: $(G_OBJS)
 
 Sully: $(S_OBJS)
 		@$(CC) $(S_OBJS) -o Sully
+		@rm -f Sully.o
 		@echo -e "Compil Sully -> "$(GREEN)"[OK]"$(RESET); \
 
 clean:
