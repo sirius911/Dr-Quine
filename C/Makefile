@@ -64,7 +64,7 @@ test_sully:		Sully
 				else \
 					echo -e $(RED)"[KO]"$(RESET); \
 				fi
-				@rm -f Sully Sully_*
+				@rm -f Sully Sully_* Sully.o
 
 Colleen: 	$(C_OBJS)
 			@$(CC) -o Colleen $(C_OBJS)
@@ -74,6 +74,7 @@ Grace: 		$(G_OBJS)
 
 Sully: 		$(S_OBJS)
 			@$(CC) -o Sully $(S_OBJS)
+			@rm -f Sully.o
 
 clean:
 			@echo "Cleaning all generated files"
