@@ -58,7 +58,7 @@ test_sully:		Sully
 				@echo "SULLY"
 				@./Sully
 				@echo -n " --> Duplicate files ... "; \
-				if test -f "Sully_0.c" && test -f "Sully_1.c" && test -f "Sully_2.c" && test -f "Sully_3.c" && test -f "Sully_4.c"; then \
+				if test -f "Sully_0.c" && test -f "Sully_1.c" && test -f "Sully_2.c" && test -f "Sully_3.c" && test -f "Sully_4.c" && test -f "Sully_5.c"; then \
 					echo -e $(GREEN)"[OK]"$(RESET); \
 					$(MAKE) -s diff_check; \
 				else \
